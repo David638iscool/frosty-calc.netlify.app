@@ -1,0 +1,307 @@
+/* ============================
+   VARIABLES FOR THEMES
+============================ */
+:root {
+    --bg-gradient: linear-gradient(135deg, #00c6ff, #0072ff);
+    --calc-bg: rgba(255, 255, 255, 0.1);
+    --calc-border: rgba(255, 255, 255, 0.2);
+    --calc-shadow: rgba(0,0,0,0.3);
+    --display-bg: rgba(255,255,255,0.2);
+    --display-color: #fff;
+    --preview-color: rgba(255,255,255,0.7);
+    --preview-glow1: rgba(255,255,255,0.8);
+    --preview-glow2: rgba(0,255,255,0.6);
+    --preview-pulse-color: #00ffea;
+    --preview-pulse-glow1: rgba(0,255,234,0.7);
+    --preview-pulse-glow2: rgba(0,255,234,0.4);
+    --button-bg: rgba(255,255,255,0.2);
+    --button-hover: rgba(255,255,255,0.4);
+    --button-active: rgba(255,255,255,0.5);
+    --equal-bg: rgba(0, 255, 150, 0.4);
+    --ripple-color: rgba(255,255,255,0.3);
+    --shimmer-bg: rgba(255,255,255,0.3);
+    --shimmer-shadow: rgba(255,255,255,0.4);
+}
+
+/* ============================
+   RESET & BASE
+============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    background: var(--bg-gradient);
+}
+
+/* Wrapper to space theme & calculator */
+.calculator-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* ============================
+   THEME SWITCHER
+============================ */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+}
+
+.theme-switcher label {
+    color: var(--display-color);
+    font-size: 14px;
+}
+
+.theme-switcher select {
+    background: var(--button-bg);
+    color: var(--display-color);
+    border: 1px solid rgba(255,255,255,0.3);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.theme-switcher select:hover {
+    background: var(--button-hover);
+}
+
+.theme-switcher select:active {
+    transform: scale(0.95);
+}
+
+/* ============================
+   CALCULATOR
+============================ */
+.calculator {
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background: var(--calc-bg);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 32px var(--calc-shadow);
+    border: 1px solid var(--calc-border);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Display */
+#display {
+    width: 100%;
+    height: 60px;
+    border: none;
+    outline: none;
+    padding: 16px;
+    font-size: 26px;
+    border-radius: 12px;
+    text-align: right;
+    background: var(--display-bg);
+    color: var(--display-color);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+#display.shimmer {
+    background: var(--shimmer-bg);
+    box-shadow: 0 0 15px var(--shimmer-shadow) inset;
+}
+
+/* Preview */
+#preview {
+    height: 20px;
+    margin-bottom: 10px;
+    padding: 5px 12px;
+    text-align: right;
+    font-size: 15px;
+    color: var(--preview-color);
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.25s ease, text-shadow 0.25s ease, color 0.25s ease;
+}
+
+#preview.glow {
+    opacity: 1;
+    text-shadow: 0 0 8px var(--preview-glow1),
+                 0 0 12px var(--preview-glow2);
+}
+
+#preview.pulse {
+    color: var(--preview-pulse-color);
+    text-shadow: 0 0 8px var(--preview-pulse-glow1),
+                 0 0 12px var(--preview-pulse-glow2);
+}
+
+/* ============================
+   BUTTONS
+============================ */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+button {
+    padding: 18px;
+    font-size: 20px;
+    border-radius: 12px;
+    min-height: 60px;
+    border: none;
+    cursor: pointer;
+    background: var(--button-bg);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+button:hover {
+    background: var(--button-hover);
+}
+
+button:active,
+button.active {
+    transform: scale(0.92);
+    background: var(--button-active);
+}
+
+.equal {
+    background: var(--equal-bg);
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+/* Ripple */
+button::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: var(--ripple-color);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+button.ripple::after {
+    transform: scale(2);
+    opacity: 0.5;
+}
+
+/* ============================
+   HISTORY PANEL
+============================ */
+.history-panel {
+    position: fixed;
+    top: 100px;
+    right: -280px;
+    width: 270px;
+    max-height: 65vh;
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.1);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 100;
+    color: #fff;
+    font-size: 14px;
+}
+
+.history-panel.show {
+    right: 20px;
+}
+
+.history-panel div {
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+
+.history-panel div:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ============================
+   HUMAN TOUCH FEEDBACK
+============================ */
+button:hover, #history-toggle:hover, .history-panel div:hover {
+    transform: translateY(-1px);
+    transition: transform 0.15s ease;
+}
+
+/* ============================
+   HISTORY PANEL SAFE FOR SMALL SCREENS
+============================ */
+@media (max-width: 500px) {
+    .calculator-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-bottom: 10px; /* leave space for history */
+    }
+
+    .history-panel {
+        position: static; /* no overlay */
+        width: 90%;
+        max-height: 150px; /* small enough for iPod */
+        margin-top: 10px;
+        overflow-y: auto;
+        background: rgba(255,255,255,0.1);
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+    .history-panel.show {
+        max-height: 150px;
+    }
+
+    .history-panel div {
+        font-size: 12px;
+        padding: 5px;
+        margin-bottom: 4px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.1);
+    }
+}
